@@ -93,6 +93,7 @@ rdf_prefix_path: "conf/prefixes.sparql"
                   ?resourceUri
                   prov:wasGeneratedBy/prov:used ?source ;
                 }
+                ORDER BY ?source
                 {% endcapture %}
                 {% assign sources = page.rdf | sparql_query: sources_query %}
                 {% if sources.size > 0 %}

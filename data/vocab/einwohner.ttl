@@ -1,0 +1,529 @@
+@prefix cube: <https://cube.link/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix unit: <https://berlinonline.github.io/lod-berlin-lor/vocab/> .
+@prefix void: <http://rdfs.org/ns/void#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+@prefix einwohner: <https://berlinonline.github.io/lod-berlin-einwohner/vocab/> .
+
+einwohner:
+    a owl:Ontology ;
+    rdfs:label "Einwohner-Statistik-Vokabular"@de ;
+    rdfs:label "Inhabitants Statistics Vocabulary"@en ;
+    # TODO: fix comment
+    # rdfs:comment """Ein Vokabular zur Beschreibung von Einheiten der
+    # 'Lebensweltlich orientierten Räume' (LOR), einer räumlichen Gliederung zur 'Planung, Prognose
+    # und Beobachtung demografischer und sozialer Entwicklungen in Berlin'."""@de ;
+    # rdfs:comment """A vocabulary for describing units of the Lebensweltlich orientierten Räume'
+    # (LOR), a geographic breakdown of Berlin for the purpose of planning, prognosis and observation of
+    # demographic and social developments."""@en ;
+    void:dataDump <https://raw.githubusercontent.com/berlinonline/lod-berlin-einwohner/main/data/vocab/einwohner.ttl> ;
+.
+
+# we just use dcterms:date with an xsd:gYearMonth value
+# TODO: encode this in a [CubeConstraint](https://cube.link/#cubeconstraints)
+# einwohner:zeit a rdf:Property ;
+#     rdfs:label "ZEIT"@de ;
+#     rdfs:comment "Berichtszeitraum (Jahr, Monat - jjjjmm )"@de ;
+# .
+
+einwohner:raumid a rdf:Property ;
+    rdfs:label "Raum-Id"@de ;
+    einwohner:afs_variable_name "RAUMID"@de ;
+    rdfs:comment "Raumidentifikator (Bezirk + LOR; 8 Stellen)"@de ;
+    rdfs:domain cube:Observation ;
+    rdfs:range unit:Planungsraum ;
+    rdfs:isDefinedBy einwohner: ;
+.
+
+einwohner:stadtraum a rdf:Property ;
+    rdfs:label "Stadtraum"@de ;
+    einwohner:afs_variable_name "STADTRAUM"@de ;
+    rdfs:comment "Gebietsaufteilung der LORs: (ab 31.12.2007)"@de ;
+    rdfs:domain cube:Observation ;
+    rdfs:range einwohner:City_region ;
+    rdfs:isDefinedBy einwohner: ;
+.
+
+einwohner:population a rdf:Property ;
+    rdfs:label "Einwohnerzahl"@de ;
+    rdfs:label "Population count"@en ;
+    rdfs:comment "A property representing a population count by some criterion. It connects an observation resource in a data cube to a number with the actual count. Instead of using this property directly, use the subproperty for the relevant criterion (age, gender etc.)."@en ;
+    rdfs:comment "Eine Property zur Abbildung einer Einwohnerzahl nach einem bestimmten Kriterium. Die Property wird genutzt, um eine Beobachtung (Observation) in einem Data Cube mit der eigentlichen Einwohnerzahl zu verknüpfen. Die Property soll nicht direkt genutzt werden. Stattdessen soll die Subproperty für das jeweils passende Kriterium (Alter, Geschlecht etc.) genutzt werden."@de ;
+    rdfs:domain cube:Observation ;
+    rdfs:range xsd:integer ;
+    rdfs:isDefinedBy einwohner: ;
+.
+
+einwohner:population_by_gender a rdf:Property ;
+    rdfs:subPropertyOf einwohner:population ;
+    rdfs:label "Einwohnerzahl nach Geschlecht"@de ;
+    rdfs:label "Population count by gender"@en ;
+    rdfs:comment "A property representing a population count by gender. See subproperties for specific genders."@en ;
+    rdfs:comment "Eine Property zur Abbildung einer Einwohnerzahl nach Geschlecht. Siehe Subproperties für bestimmte Geschlechter."@de ;
+    rdfs:domain cube:Observation ;
+    rdfs:range xsd:integer ;
+    rdfs:isDefinedBy einwohner: ;
+.
+
+einwohner:population_by_age_group a rdf:Property ;
+    rdfs:subPropertyOf einwohner:population ;
+    rdfs:label "Einwohnerzahl nach Altersgruppe"@de ;
+    rdfs:label "Population count by age group"@en ;
+    rdfs:comment "A property representing a population count by age group. See subproperties for specific age groups."@en ;
+    rdfs:comment "Eine Property zur Abbildung einer Einwohnerzahl nach Altersgruppe. Siehe Subproperties für bestimmte Altersgruppen."@de ;
+    rdfs:isDefinedBy einwohner: ;
+.
+
+
+einwohner:e_e a rdf:Property ;
+    rdfs:subPropertyOf einwohner:population ;
+    rdfs:label "Einwohner insgesamt"@de ;
+    rdfs:label "population total"@en ;
+    einwohner:afs_variable_name "E_E"@de ;
+    rdfs:range xsd:integer ;
+    rdfs:isDefinedBy einwohner: ;
+.
+
+einwohner:e_em a rdf:Property ;
+    rdfs:subPropertyOf einwohner:population_by_gender ;
+    rdfs:label "Einwohner männlich"@de ;
+    rdfs:label "male population"@en ;
+    einwohner:afs_variable_name "E_EM"@de ;
+    skos:altLabel "Männerkohorte"@de ;
+    rdfs:range xsd:integer ;
+    rdfs:isDefinedBy einwohner: ;
+.
+
+einwohner:e_ew a rdf:Property ;
+    rdfs:subPropertyOf einwohner:population_by_gender ;
+    rdfs:label "Einwohner weiblich"@de ;
+    rdfs:label "female population"@en ;
+    einwohner:afs_variable_name "E_EW"@de ;
+    skos:altLabel "Frauenkohorte"@de ;
+    rdfs:range xsd:integer ;
+    rdfs:isDefinedBy einwohner: ;
+.
+
+einwohner:e_e00_01 a rdf:Property ;
+    rdfs:subPropertyOf einwohner:population_by_age_group ;
+    rdfs:label "0 bis unter 1 Jahre"@de ;
+    rdfs:label "0 to under 1 years"@en ;
+    einwohner:afs_variable_name "E_E00_01"@de ;
+    rdfs:range xsd:integer ;
+    rdfs:isDefinedBy einwohner: ;
+.
+
+einwohner:e_e01_02 a rdf:Property ;
+    rdfs:subPropertyOf einwohner:population_by_age_group ;
+    rdfs:label "1 bis unter 2 Jahre"@de ;
+    rdfs:label "1 to under 2 years"@en ;
+    einwohner:afs_variable_name "E_E01_02"@de ;
+    rdfs:range xsd:integer ;
+    rdfs:isDefinedBy einwohner: ;
+.
+
+einwohner:e_e02_03 a rdf:Property ;
+    rdfs:subPropertyOf einwohner:population_by_age_group ;
+    rdfs:label "2 bis unter 3 Jahre"@de ;
+    rdfs:label "2 to under 3 years"@en ;
+    einwohner:afs_variable_name "E_E02_03"@de ;
+    rdfs:range xsd:integer ;
+    rdfs:isDefinedBy einwohner: ;
+.
+
+einwohner:e_e03_05 a rdf:Property ;
+    rdfs:subPropertyOf einwohner:population_by_age_group ;
+    rdfs:label "3 bis unter 5 Jahre"@de ;
+    rdfs:label "3 to under 5 years"@en ;
+    einwohner:afs_variable_name "E_E03_05"@de ;
+    rdfs:range xsd:integer ;
+    rdfs:isDefinedBy einwohner: ;
+.
+
+einwohner:e_e05_06 a rdf:Property ;
+    rdfs:subPropertyOf einwohner:population_by_age_group ;
+    rdfs:label "5 bis unter 6 Jahre"@de ;
+    rdfs:label "5 to under 6 years"@en ;
+    einwohner:afs_variable_name "E_E05_06"@de ;
+    rdfs:range xsd:integer ;
+    rdfs:isDefinedBy einwohner: ;
+.
+
+einwohner:e_e06_07 a rdf:Property ;
+    rdfs:subPropertyOf einwohner:population_by_age_group ;
+    rdfs:label "6 bis unter 7 Jahre"@de ;
+    rdfs:label "6 to under 7 years"@en ;
+    einwohner:afs_variable_name "E_E06_07"@de ;
+    rdfs:range xsd:integer ;
+    rdfs:isDefinedBy einwohner: ;
+.
+
+einwohner:e_e07_08 a rdf:Property ;
+    rdfs:subPropertyOf einwohner:population_by_age_group ;
+    rdfs:label "7 bis unter 8 Jahre"@de ;
+    rdfs:label "7 to under 8 years"@en ;
+    einwohner:afs_variable_name "E_E07_08"@de ;
+    rdfs:range xsd:integer ;
+    rdfs:isDefinedBy einwohner: ;
+.
+
+einwohner:e_e08_10 a rdf:Property ;
+    rdfs:subPropertyOf einwohner:population_by_age_group ;
+    rdfs:label "8 bis unter 10 Jahre"@de ;
+    rdfs:label "8 to under 10 years"@en ;
+    einwohner:afs_variable_name "E_E08_10"@de ;
+    rdfs:range xsd:integer ;
+    rdfs:isDefinedBy einwohner: ;
+.
+
+einwohner:e_e10_12 a rdf:Property ;
+    rdfs:subPropertyOf einwohner:population_by_age_group ;
+    rdfs:label "10 bis unter 12 Jahre"@de ;
+    rdfs:label "10 to under 12 years"@en ;
+    einwohner:afs_variable_name "E_E10_12"@de ;
+    rdfs:range xsd:integer ;
+    rdfs:isDefinedBy einwohner: ;
+.
+
+einwohner:e_e12_14 a rdf:Property ;
+    rdfs:subPropertyOf einwohner:population_by_age_group ;
+    rdfs:label "12 bis unter 14 Jahre"@de ;
+    rdfs:label "12 to under 14 years"@en ;
+    einwohner:afs_variable_name "E_E12_14"@de ;
+    rdfs:range xsd:integer ;
+    rdfs:isDefinedBy einwohner: ;
+.
+
+einwohner:e_e14_15 a rdf:Property ;
+    rdfs:subPropertyOf einwohner:population_by_age_group ;
+    rdfs:label "14 bis unter 15 Jahre"@de ;
+    rdfs:label "14 to under 15 years"@en ;
+    einwohner:afs_variable_name "E_E14_15"@de ;
+    rdfs:range xsd:integer ;
+    rdfs:isDefinedBy einwohner: ;
+.
+
+einwohner:e_e15_18 a rdf:Property ;
+    rdfs:subPropertyOf einwohner:population_by_age_group ;
+    rdfs:label "15 bis unter 18 Jahre"@de ;
+    rdfs:label "15 to under 18 years"@en ;
+    einwohner:afs_variable_name "E_E15_18"@de ;
+    rdfs:range xsd:integer ;
+    rdfs:isDefinedBy einwohner: ;
+.
+
+einwohner:e_e18_21 a rdf:Property ;
+    rdfs:subPropertyOf einwohner:population_by_age_group ;
+    rdfs:label "18 bis unter 21 Jahre"@de ;
+    rdfs:label "18 to under 21 years"@en ;
+    einwohner:afs_variable_name "E_E18_21"@de ;
+    rdfs:range xsd:integer ;
+    rdfs:isDefinedBy einwohner: ;
+.
+
+einwohner:e_e21_25 a rdf:Property ;
+    rdfs:subPropertyOf einwohner:population_by_age_group ;
+    rdfs:label "21 bis unter 25 Jahre"@de ;
+    rdfs:label "21 to under 25 years"@en ;
+    einwohner:afs_variable_name "E_E21_25"@de ;
+    rdfs:range xsd:integer ;
+    rdfs:isDefinedBy einwohner: ;
+.
+
+einwohner:e_e25_27 a rdf:Property ;
+    rdfs:subPropertyOf einwohner:population_by_age_group ;
+    rdfs:label "25 bis unter 27 Jahre"@de ;
+    rdfs:label "25 to under 27 years"@en ;
+    einwohner:afs_variable_name "E_E25_27"@de ;
+    rdfs:range xsd:integer ;
+    rdfs:isDefinedBy einwohner: ;
+.
+
+einwohner:e_e27_30 a rdf:Property ;
+    rdfs:subPropertyOf einwohner:population_by_age_group ;
+    rdfs:label "27 bis unter 30 Jahre"@de ;
+    rdfs:label "27 to under 30 years"@en ;
+    einwohner:afs_variable_name "E_E27_30"@de ;
+    rdfs:range xsd:integer ;
+    rdfs:isDefinedBy einwohner: ;
+.
+
+einwohner:e_e30_35 a rdf:Property ;
+    rdfs:subPropertyOf einwohner:population_by_age_group ;
+    rdfs:label "30 bis unter 35 Jahre"@de ;
+    rdfs:label "30 to under 35 years"@en ;
+    einwohner:afs_variable_name "E_E30_35"@de ;
+    rdfs:range xsd:integer ;
+    rdfs:isDefinedBy einwohner: ;
+.
+
+einwohner:e_e35_40 a rdf:Property ;
+    rdfs:subPropertyOf einwohner:population_by_age_group ;
+    rdfs:label "35 bis unter 40 Jahre"@de ;
+    rdfs:label "35 to under 40 years"@en ;
+    einwohner:afs_variable_name "E_E35_40"@de ;
+    rdfs:range xsd:integer ;
+    rdfs:isDefinedBy einwohner: ;
+.
+
+einwohner:e_e40_45 a rdf:Property ;
+    rdfs:subPropertyOf einwohner:population_by_age_group ;
+    rdfs:label "40 bis unter 45 Jahre"@de ;
+    rdfs:label "40 to under 45 years"@en ;
+    einwohner:afs_variable_name "E_E40_45"@de ;
+    rdfs:range xsd:integer ;
+    rdfs:isDefinedBy einwohner: ;
+.
+
+einwohner:e_e45_50 a rdf:Property ;
+    rdfs:subPropertyOf einwohner:population_by_age_group ;
+    rdfs:label "45 bis unter 50 Jahre"@de ;
+    rdfs:label "45 to under 50 years"@en ;
+    einwohner:afs_variable_name "E_E45_50"@de ;
+    rdfs:range xsd:integer ;
+    rdfs:isDefinedBy einwohner: ;
+.
+
+einwohner:e_e50_55 a rdf:Property ;
+    rdfs:subPropertyOf einwohner:population_by_age_group ;
+    rdfs:label "50 bis unter 55 Jahre"@de ;
+    rdfs:label "50 to under 55 years"@en ;
+    einwohner:afs_variable_name "E_E50_55"@de ;
+    rdfs:range xsd:integer ;
+    rdfs:isDefinedBy einwohner: ;
+.
+
+einwohner:e_e55_60 a rdf:Property ;
+    rdfs:subPropertyOf einwohner:population_by_age_group ;
+    rdfs:label "55 bis unter 60 Jahre"@de ;
+    rdfs:label "55 to under 60 years"@en ;
+    einwohner:afs_variable_name "E_E55_60"@de ;
+    rdfs:range xsd:integer ;
+    rdfs:isDefinedBy einwohner: ;
+.
+
+einwohner:e_e60_63 a rdf:Property ;
+    rdfs:subPropertyOf einwohner:population_by_age_group ;
+    rdfs:label "60 bis unter 63 Jahre"@de ;
+    rdfs:label "60 to under 63 years"@en ;
+    einwohner:afs_variable_name "E_E60_63"@de ;
+    rdfs:range xsd:integer ;
+    rdfs:isDefinedBy einwohner: ;
+.
+
+einwohner:e_e63_65 a rdf:Property ;
+    rdfs:subPropertyOf einwohner:population_by_age_group ;
+    rdfs:label "63 bis unter 65 Jahre"@de ;
+    rdfs:label "63 to under 65 years"@en ;
+    einwohner:afs_variable_name "E_E63_65"@de ;
+    rdfs:range xsd:integer ;
+    rdfs:isDefinedBy einwohner: ;
+.
+
+einwohner:e_e65_67 a rdf:Property ;
+    rdfs:subPropertyOf einwohner:population_by_age_group ;
+    rdfs:label "65 bis unter 67 Jahre"@de ;
+    rdfs:label "65 to under 67 years"@en ;
+    einwohner:afs_variable_name "E_E65_67"@de ;
+    rdfs:range xsd:integer ;
+    rdfs:isDefinedBy einwohner: ;
+.
+
+einwohner:e_e67_70 a rdf:Property ;
+    rdfs:subPropertyOf einwohner:population_by_age_group ;
+    rdfs:label "67 bis unter 70 Jahre"@de ;
+    rdfs:label "67 to under 70 years"@en ;
+    einwohner:afs_variable_name "E_E67_70"@de ;
+    rdfs:range xsd:integer ;
+    rdfs:isDefinedBy einwohner: ;
+.
+
+einwohner:e_e70_75 a rdf:Property ;
+    rdfs:subPropertyOf einwohner:population_by_age_group ;
+    rdfs:label "70 bis unter 75 Jahre"@de ;
+    rdfs:label "70 to under 75 years"@en ;
+    einwohner:afs_variable_name "E_E70_75"@de ;
+    rdfs:range xsd:integer ;
+    rdfs:isDefinedBy einwohner: ;
+.
+
+einwohner:e_e75_80 a rdf:Property ;
+    rdfs:subPropertyOf einwohner:population_by_age_group ;
+    rdfs:label "75 bis unter 80 Jahre"@de ;
+    rdfs:label "75 to under 80 years"@en ;
+    einwohner:afs_variable_name "E_E75_80"@de ;
+    rdfs:range xsd:integer ;
+    rdfs:isDefinedBy einwohner: ;
+.
+
+einwohner:e_e80_85 a rdf:Property ;
+    rdfs:subPropertyOf einwohner:population_by_age_group ;
+    rdfs:label "80 bis unter 85 Jahre"@de ;
+    rdfs:label "80 to under 85 years"@en ;
+    einwohner:afs_variable_name "E_E80_85"@de ;
+    rdfs:range xsd:integer ;
+    rdfs:isDefinedBy einwohner: ;
+.
+
+einwohner:e_e85_90 a rdf:Property ;
+    rdfs:subPropertyOf einwohner:population_by_age_group ;
+    rdfs:label "85 bis unter 90 Jahre"@de ;
+    rdfs:label "85 to under 90 years"@en ;
+    einwohner:afs_variable_name "E_E85_90"@de ;
+    rdfs:range xsd:integer ;
+    rdfs:isDefinedBy einwohner: ;
+.
+
+einwohner:e_e90_95 a rdf:Property ;
+    rdfs:subPropertyOf einwohner:population_by_age_group ;
+    rdfs:label "90 bis unter 95 Jahre"@de ;
+    rdfs:label "90 to under 95 years"@en ;
+    einwohner:afs_variable_name "E_E90_95"@de ;
+    rdfs:range xsd:integer ;
+    rdfs:isDefinedBy einwohner: ;
+.
+
+einwohner:e_e95_110 a rdf:Property ;
+    rdfs:subPropertyOf einwohner:population_by_age_group ;
+    rdfs:label "95 und älter"@de ;
+    rdfs:label "95 and older"@en ;
+    einwohner:afs_variable_name "E_E95_110"@de ;
+    rdfs:range xsd:integer ;
+    rdfs:isDefinedBy einwohner: ;
+.
+
+einwohner:e_u1 a rdf:Property ;
+    rdfs:subPropertyOf einwohner:population_by_age_group ;
+    rdfs:label "Säuglinge"@de ;
+    rdfs:label "infants"@en ;
+    einwohner:afs_variable_name "E_U1"@de ;
+    rdfs:comment "unter 1 Jahr"@de ;
+    rdfs:comment "unter 1 year"@en ;
+    rdfs:range xsd:integer ;
+    rdfs:isDefinedBy einwohner: ;
+.
+
+einwohner:e_1u6 a rdf:Property ;
+    rdfs:subPropertyOf einwohner:population_by_age_group ;
+    rdfs:label "Kinder im Kindergartenalter"@de ;
+    rdfs:label "children in kindergarten age"@en ;
+    einwohner:afs_variable_name "E_1U6"@de ;
+    rdfs:comment "1 bis unter 6 Jahre"@de ;
+    rdfs:comment "1 to under 6 years"@en ;
+    rdfs:range xsd:integer ;
+    rdfs:isDefinedBy einwohner: ;
+.
+
+einwohner:e_6u15 a rdf:Property ;
+    rdfs:subPropertyOf einwohner:population_by_age_group ;
+    rdfs:label "Kinder, jüngere Jugendliche"@de ;
+    rdfs:label "children, younger teenagers"@en ;
+    einwohner:afs_variable_name "E_6U15"@de ;
+    rdfs:comment "6 bis unter 15 Jahre"@de ;
+    rdfs:comment "6 to under 15 years"@en ;
+    rdfs:range xsd:integer ;
+    rdfs:isDefinedBy einwohner: ;
+.
+
+einwohner:e_15u18 a rdf:Property ;
+    rdfs:subPropertyOf einwohner:population_by_age_group ;
+    rdfs:label "Jugendliche"@de ;
+    rdfs:label "teenagers"@en ;
+    einwohner:afs_variable_name "E_15U18"@de ;
+    rdfs:comment "15 bis unter 18 Jahre"@de ;
+    rdfs:comment "15 to under 18 years"@en ;
+    rdfs:range xsd:integer ;
+    rdfs:isDefinedBy einwohner: ;
+.
+
+einwohner:e_18u25 a rdf:Property ;
+    rdfs:subPropertyOf einwohner:population_by_age_group ;
+    rdfs:label "junge Erwachsene"@de ;
+    rdfs:label "young adults"@en ;
+    einwohner:afs_variable_name "E_18U25"@de ;
+    rdfs:comment "18 bis unter 25 Jahre"@de ;
+    rdfs:comment "18 to under 25 years"@en ;
+    rdfs:range xsd:integer ;
+    rdfs:isDefinedBy einwohner: ;
+.
+
+einwohner:e_25u55 a rdf:Property ;
+    rdfs:subPropertyOf einwohner:population_by_age_group ;
+    rdfs:label "Erwachsene"@de ;
+    rdfs:label "adults"@en ;
+    einwohner:afs_variable_name "E_25U55"@de ;
+    rdfs:comment "25 bis unter 55 Jahre"@de ;
+    rdfs:comment "25 to under 55 years"@en ;
+    rdfs:range xsd:integer ;
+    rdfs:isDefinedBy einwohner: ;
+.
+
+einwohner:e_55u65 a rdf:Property ;
+    rdfs:subPropertyOf einwohner:population_by_age_group ;
+    rdfs:label "ältere Erwachsene"@de ;
+    rdfs:label "older adults"@en ;
+    einwohner:afs_variable_name "E_55U65"@de ;
+    rdfs:comment "55 bis unter 65 Jahre"@de ;
+    rdfs:comment "55 to under 65 years"@en ;
+    rdfs:range xsd:integer ;
+    rdfs:isDefinedBy einwohner: ;
+.
+
+einwohner:e_65u80 a rdf:Property ;
+    rdfs:subPropertyOf einwohner:population_by_age_group ;
+    rdfs:label "Senioren"@de ;
+    rdfs:label "seniors"@en ;
+    einwohner:afs_variable_name "E_65U80"@de ;
+    rdfs:comment "65 bis unter 80 Jahre"@de ;
+    rdfs:comment "65 to under 80 years"@en ;
+    rdfs:range xsd:integer ;
+    rdfs:isDefinedBy einwohner: ;
+.
+
+einwohner:e_80u110 a rdf:Property ;
+    rdfs:subPropertyOf einwohner:population_by_age_group ;
+    rdfs:subPropertyOf einwohner:population_by_age_group ;
+    rdfs:label "Hochbetagte"@de ;
+    rdfs:label "people of high age"@en ;
+    einwohner:afs_variable_name "E_80U110"@de ;
+    rdfs:comment "80 Jahre und älter"@de ;
+    rdfs:comment "80 years and older"@en ;
+    rdfs:range xsd:integer ;
+    rdfs:isDefinedBy einwohner: ;
+.
+
+einwohner:afs_variable_name a rdf:Property ;
+    rdfs:label "AfS Variablenname"@de ;
+    rdfs:label "AfS variable name"@en ;
+    rdfs:comment "Variablenname in den Quelldaten des Amt für Statistik Berlin-Brandenburg"@de ;
+    rdfs:comment "Name of the variable in the source data as published by the Amt für Statistik Berlin-Brandenburg"@en ;
+    rdfs:isDefinedBy einwohner: ;
+.
+
+einwohner:City_region a rdfs:Class ;
+    rdfs:label "Stadtraum"@de ;
+    rdfs:label "city region"@en ;
+    rdfs:comment "Gebietsaufteilung Berlins in innere und äußere Stadt, auf Basis der LORs: (ab 31.12.2007). Siehe Instanzen der Klasse."@de ;
+    rdfs:comment "Division of Berlin into inner and outer city, based on the LORs (starting 2007-12-31). See instances of this class."@en ;
+    rdfs:isDefinedBy einwohner: ;
+.
+
+einwohner:inner_city a einwohner:city_region ;
+    rdfs:label "Innerer Stadtraum"@de ;
+    rdfs:label "inner city"@en ;
+    rdfs:comment "Innerer Stadtraum von Berlin"@de ;
+    rdfs:comment "inner city of Berlin"@en ;
+    rdfs:isDefinedBy einwohner: ;
+.
+
+einwohner:outer_city a einwohner:city_region ;
+    rdfs:label "Äußerer Stadtraum"@de ;
+    rdfs:label "outer city"@en ;
+    rdfs:comment "Äußerer Stadtraum von Berlin"@de ;
+    rdfs:comment "outer city of Berlin"@en ;
+    rdfs:isDefinedBy einwohner: ;
+.

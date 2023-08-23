@@ -1,6 +1,9 @@
 - prefix: dct
   url: http://purl.org/dc/terms/
 
+- prefix: owl
+  url: <http://www.w3.org/2002/07/owl#>
+
 - prefix: rdf
   url: http://www.w3.org/1999/02/22-rdf-syntax-ns#
 
@@ -28,5 +31,17 @@
 - prefix: prov
   url: http://www.w3.org/ns/prov#
 
+- prefix: xsd
+  url: http://www.w3.org/2001/XMLSchema#
+
 - prefix: lodbo
   url: https://berlinonline.github.io/lod-berlin-bo/
+
+- prefix: lodeinwohner
+  url: https://berlinonline.github.io/lod-berlin-einwohner/
+
+- prefix: einwohner
+  url: https://berlinonline.github.io/lod-berlin-einwohner/vocab/
+
+- prefix: cube
+  url: https://cube.link/

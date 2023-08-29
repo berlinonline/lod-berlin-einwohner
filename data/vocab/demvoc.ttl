@@ -13,13 +13,17 @@ demvoc:
     a owl:Ontology ;
     rdfs:label "Einwohner-Statistik-Vokabular"@de ;
     rdfs:label "Inhabitants Statistics Vocabulary"@en ;
-    # TODO: fix comment
-    # rdfs:comment """Ein Vokabular zur Beschreibung von Einheiten der
-    # 'Lebensweltlich orientierten Räume' (LOR), einer räumlichen Gliederung zur 'Planung, Prognose
-    # und Beobachtung demografischer und sozialer Entwicklungen in Berlin'."""@de ;
-    # rdfs:comment """A vocabulary for describing units of the Lebensweltlich orientierten Räume'
-    # (LOR), a geographic breakdown of Berlin for the purpose of planning, prognosis and observation of
-    # demographic and social developments."""@en ;
+    rdfs:comment """Ein Vokabular für die Angabe demografischer Informationen mit Raum- und Zeit-
+        Bezug. Enthalten sind Properties, die als Dimensionen von `Observations` (Beobachtungen)
+        in einem RDF-Cube im Sinne des [Cube](https://cube.link/)-Vokabulars genutzt werden können.
+        Das Vokabular wurde teilweise automatisch aus der Dokumentation der Berliner Einwohner
+        Statistiken erzeugt (z.B. https://github.com/berlinonline/lod-berlin-einwohner/blob/main/data/static/documentation/2018_Beschreibung_EWR_Datenpool_2018.pdf).""" ;
+    rdfs:comment """A vocabulary for expressing demographic data with geographical and temporal
+        references. Contained are properties that can be used as dimensions of Observations in an
+        RDF cube following the [Cube](https://cube.link/) vocabulary.
+        The vocabulary was build semi-automatically from the documentation of Berlin's population
+        statistics (e.g. https://github.com/berlinonline/lod-berlin-einwohner/blob/main/data/static/documentation/2018_Beschreibung_EWR_Datenpool_2018.pdf).
+        """@en ;
     void:dataDump <https://raw.githubusercontent.com/berlinonline/lod-berlin-einwohner/main/data/vocab/einwohner.ttl> ;
 .
 
@@ -30,7 +34,22 @@ demvoc:
 #     rdfs:comment "Berichtszeitraum (Jahr, Monat - jjjjmm )"@de ;
 # .
 
+demvoc:georef a rdf:Property ;
+    rdfs:label "Georeferenz"@de ;
+    rdfs:label "Georeference"@en ;
+    rdfs:comment """Eine Property für die Referenzierung einer geografischen Einheit durch
+        eine Beobachtung (Observation) in einem RDF-Cube. Die Property soll nicht direkt genutzt werden.
+        Stattdessen soll die Subproperty für die tatsächlich genutzte Referenz (z.B. Planungsraum, PLZ
+        etc.)."""@de ;
+    rdfs:comment """A property for referencing a geographical unit from an observation in an RDF-Cube.
+        Instead of using this property directly, use the subproperty for the specific reference used in
+        this case (zip code, PLR etc.)."""@en ;
+    rdfs:domain cube:Observation ;
+    rdfs:isDefinedBy demvoc: ;
+.
+
 demvoc:raumid a rdf:Property ;
+    rdfs:subPropertyOf demvoc:georef ;
     rdfs:label "Raum-Id"@de ;
     demvoc:afs_variable_name "RAUMID"@de ;
     rdfs:comment "Raumidentifikator (Bezirk + LOR; 8 Stellen)"@de ;

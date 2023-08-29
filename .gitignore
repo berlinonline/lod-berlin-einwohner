@@ -1,6 +1,7 @@
 /data/temp
 Gemfile.lock
 _site/
+_partial_sites/
 .jekyll-cache/
 .vscode
 _includes/cbds

@@ -36,12 +36,18 @@ jobs:
       - name: Install Python Requirements
         run: |
           pip install -r requirements.txt
-      - name: Build source RDF
+      - name: Install dependencies
         run: |
-          make data/temp/all.nt
-      - name: Build concise bounded descriptions
+          sudo apt-get install openjdk-18-jdk
+      - name: Install Apache Jena
         run: |
-          make cbds
+          curl --location --silent --show-error --fail --retry-connrefused --retry 3 --output jena.tar.gz https://dlcdn.apache.org/jena/binaries/apache-jena-4.9.0.tar.gz
+          tar zxf jena.tar.gz
+          sudo mv apache-jena* /opt/jena
+          echo "/opt/jena/bin" >> $GITHUB_PATH
+      - name: Test Apache Installation
+        run: |
+          riot --version
       - name: Setup Ruby
         uses: ruby/setup-ruby@ee2113536afb7f793eed4ce60e8d3b26db912da4 # v1.127.0
         with:
@@ -51,9 +57,9 @@ jobs:
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v3
-      - name: Build with Jekyll
-        # Outputs to the './_site' directory by default
-        run: bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}"
+      - name: Build and merge partial sites
+        run: |
+          make merge-sites
         env:
           JEKYLL_ENV: production
       - name: Upload artifact

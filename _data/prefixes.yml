@@ -37,11 +37,14 @@
 - prefix: lodbo
   url: https://berlinonline.github.io/lod-berlin-bo/
 
-- prefix: lodeinwohner
+- prefix: einwohner
   url: https://berlinonline.github.io/lod-berlin-einwohner/
 
-- prefix: einwohner
+- prefix: demvoc
   url: https://berlinonline.github.io/lod-berlin-einwohner/vocab/
 
 - prefix: cube
   url: https://cube.link/
+
+- PREFIX: lor19
+  url: https://berlinonline.github.io/lod-berlin-lor-2019/

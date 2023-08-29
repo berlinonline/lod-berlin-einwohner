@@ -4,7 +4,7 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix lodsg: <https://berlinonline.github.io/lod-sg/> .
 @prefix lodbo: <https://berlinonline.github.io/lod-berlin-bo/> .
-@prefix lodeinwohner: <https://berlinonline.github.io/lod-berlin-einwohner/> .
+@prefix einwohner: <https://berlinonline.github.io/lod-berlin-einwohner/> .
 @prefix schema: <https://schema.org/> .
 @prefix void: <http://rdfs.org/ns/void#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,24 +12,24 @@
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 
-lodeinwohner:
+einwohner:
     a void:Dataset ;
     dct:title "Einwohnerinnen und Einwohner in Berlin in LOR-Planungsräumen"@de ;
     dct:title "Inhabitants of Berlin by LOR-Planungsraum units"@en ;
-    dct:description """Dieser Datensatz beinhaltet demographische Statistiken zu Berlin. Die Daten sind geografisch gegliedert nach LOR-Planungsräumen und zeitlich nach Jahren. Für jedes Jahr/Planungsraum sind die Gesamtbevölkerung, Bevölkerung nach Geschlecht und Bevölkerung nach Altersklassen enthalten."""@de ;
-    dct:description """This dataset contains demographical data for Berlin. The data is structured geographically by LOR-Planungsraum units and temporally by year. For each year/Planungsraum the data contains the total population, population by gender and population by age."""@en ;
+    dct:description """Dieser Datensatz beinhaltet demographische Statistiken zu Berlin. Die Daten sind geografisch gegliedert nach LOR-Planungsräumen und zeitlich nach Jahren. Für jedes Jahr/Planungsraum sind die Gesamtbevölkerung, Bevölkerung nach Geschlecht und Bevölkerung nach Altersklassen enthalten. Der Einstiegspunkt für die Daten ist ein RDF-Cube-Objekt."""@de ;
+    dct:description """This dataset contains demographical data for Berlin. The data is structured geographically by LOR-Planungsraum units and temporally by year. For each year/Planungsraum the data contains the total population, population by gender and population by age. The entry point for the data is an RDF cube object."""@en ;
     dct:created "2023-08-17"^^xsd:date ;
     dct:publisher lodbo:berlinonline ;
     dct:license <https://creativecommons.org/publicdomain/zero/1.0/> ;
     foaf:homepage <https://github.com/berlinonline/lod-berlin-einwohner> ;
     void:feature <http://www.w3.org/ns/formats/Turtle> ;
     void:dataDump <https://raw.githubusercontent.com/berlinonline/lod-berlin-einwohner/main/data/target/all.ttl> ;
-    # void:rootResource <...> ;
+    void:rootResource einwohner:c_einwohner ;
     # void:exampleResource <...> ;
-    prov:wasGeneratedBy lodeinwohner:triplification ;
+    prov:wasGeneratedBy einwohner:triplification ;
 .
 
-lodeinwohner:triplification
+einwohner:triplification
     a prov:Activity ;
     rdfs:label "Triplifizierung"@de ;
     rdfs:label "Tripclification"@en ;
@@ -57,9 +57,9 @@ lodeinwohner:triplification
     prov:used datenregister:einwohnerinnen-und-einwohner-in-berlin-in-lor-planungsraumen-am-31-12-2020 ;
 .
 
-lodeinwohner:impressum
+einwohner:impressum
     a lodsg:ImprintPage ;
     schema:name "Impressum"@de ;
     schema:name "Imprint"@en ;
-    schema:about lodeinwohner: ;
+    schema:about einwohner: ;
 .

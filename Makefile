@@ -1,5 +1,6 @@
 base_uri = https://berlinonline.github.io/lod-berlin-einwohner/
 berlinonline_url = https://raw.githubusercontent.com/berlinonline/lod-berlin-bo/main/data/static/berlinonline.ttl
+UNAME_S := $(shell uname -s)
 
 data/temp/berlinonline.ttl: data/temp
 	@echo "downloading $(berlinonline_url)..."
@@ -57,11 +58,16 @@ _partial_sites/_site_%: cbds_% _partial_sites/_config_%.yml
 	@echo "generating partial site $@ ..."
 	@bundle exec jekyll build --config $(filter-out $<,$^) --destination $@
 
-partial-sites: _partial_sites/_site_EWR201012E _partial_sites/_site_EWR201112E _partial_sites/_site_common 
+partial-sites: _partial_sites/_site_EWR201012E _partial_sites/_site_common 
 
 merge-sites: partial-sites _site
 	@echo "merging all partial sites into $(filter-out $<,$^) ..."
-	cp -R _partial_sites/*/* $(filter-out $<,$^)/
+	@if [ $(UNAME_S) = "Linux" ]; then\
+		cp -n -R _partial_sites/*/* $(filter-out $<,$^)/;\
+	fi
+	@if [ $(UNAME_S) = "Darwin" ]; then\
+		cp -R _partial_sites/*/* $(filter-out $<,$^)/;\
+	fi
 
 data/temp/all.nt: data/temp/base_data.nt data/temp/all_cubes.ttl
 	@echo "combining $^ to $@ ..."

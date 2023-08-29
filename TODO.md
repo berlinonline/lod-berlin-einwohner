@@ -1,15 +1,20 @@
 # TODO
 
-- vocabulary description
-- template for vocabulary terms
-    - label, comment, altlabel
-    - rdfs:definedBy
-    - breadcrumb should be Datensatz > VOCAB > CURRENT_TERM
-- convert sources
-- cube constraint
-- explain data structure in README
-- add sources to README
-- `lor19` namespace prefix does not show up in observations (instead empty prefix is shown)
+- [X] vocabulary description
+- [ ] template for vocabulary terms
+    - [ ] label, comment, altlabel
+    - [ ] rdfs:definedBy
+    - [ ] breadcrumb should be Datensatz > VOCAB > CURRENT_TERM
+- [X] convert sources
+- [ ] cube constraint
+- [ ] explain data structure in README
+- [X] add sources to README
+- [X] templates for 
+    - [X] Cube, 
+    - [X] ObservationSet, 
+    - [X] Observation
+- [ ] `lor19` namespace prefix does not show up in observations (instead empty prefix is shown)
+- [ ] get names of PLRs from LOR-19 dataset and merge with this data, to display name instead of URL in observation
 
 ## Scalability Problem
 

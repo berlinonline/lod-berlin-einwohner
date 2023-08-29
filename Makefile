@@ -23,6 +23,10 @@ data/temp/%.ttl: data/temp/variable_property_mapping.csv data/temp/%.normalised.
 	@echo "writing to $@ ..."
 	@python bin/csv2cube.py --source $(filter-out $<,$^) --output $@
 
+data/temp/%_extended.nt: data/temp data/temp/%.ttl data/vocab/demvoc.ttl
+	@echo "combining $(filter-out $<,$^) to $@ ..."
+	@rdfpipe -o ntriples $(filter-out $<,$^) > $@
+
 data/temp/all_commons.ttl:
 	@echo "merging common stuff of all RDF cubes ..."
 	@echo "writing to $@ ..."
@@ -35,7 +39,7 @@ data/temp/base_data.nt: data/temp data/temp/all_commons.ttl void.ttl data/temp/b
 _partial_sites/_config_common.yml: _partial_sites data/temp/base_data.nt
 	@echo "generating partial config for $(filter-out $<,$^) ..."
 	@echo "writing to $@ ..."
-	@sed 's|$$SOURCE_PATH|$(filter-out $<,$^)|' _config_template.yml > $@
+	@sed 's|$$SOURCE_PATH|$(filter-out $<,$^)|' _config_template_common.yml > $@
 
 cbds_common: _includes/cbds data/temp/base_data.nt 
 	@echo "computing concise bounded descriptions for all subjects in $(filter-out $<,$^) ..."
@@ -45,12 +49,12 @@ _partial_sites/_site_common: cbds_common _partial_sites/_config_common.yml
 	@echo "generating partial site $@ ..."
 	@bundle exec jekyll build --config $(filter-out $<,$^) --destination $@
 
-_partial_sites/_config_%.yml: _partial_sites data/temp/%.ttl
+_partial_sites/_config_%.yml: _partial_sites data/temp/%_extended.nt
 	@echo "generating partial config for $(filter-out $<,$^) ..."
 	@echo "writing to $@ ..."
 	@sed 's|$$SOURCE_PATH|$(filter-out $<,$^)|' _config_template.yml > $@
 
-cbds_%: _includes/cbds data/temp/%.ttl
+cbds_%: _includes/cbds data/temp/%_extended.nt
 	@echo "computing concise bounded descriptions for all subjects in $(filter-out $<,$^) ..."
 	@python bin/compute_cbds.py --base="$(base_uri)" --source $(filter-out $<,$^) --output $<
 
@@ -58,7 +62,8 @@ _partial_sites/_site_%: cbds_% _partial_sites/_config_%.yml
 	@echo "generating partial site $@ ..."
 	@bundle exec jekyll build --config $(filter-out $<,$^) --destination $@
 
-partial-sites: _partial_sites/_site_EWR201012E _partial_sites/_site_common 
+# partial-sites: _partial_sites/_site_EWR201012E _partial_sites/_site_common 
+partial-sites: _partial_sites/_site_EWR201012E _partial_sites/_site_EWR201112E _partial_sites/_site_EWR201212E _partial_sites/_site_EWR201312E _partial_sites/_site_EWR201412E _partial_sites/_site_EWR201512E _partial_sites/_site_EWR201612E _partial_sites/_site_EWR201712E _partial_sites/_site_EWR201812E _partial_sites/_site_EWR201912E _partial_sites/_site_EWR202012E _partial_sites/_site_common 
 
 merge-sites: partial-sites _site
 	@echo "merging all partial sites into $(filter-out $<,$^) ..."

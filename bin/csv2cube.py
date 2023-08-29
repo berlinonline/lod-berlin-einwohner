@@ -39,6 +39,9 @@ cube_res = einwohner[cube_id]
 graph_common.add( (cube_res, RDF.type, cube['Cube']) )
 graph_common.add( (cube_res, schema['name'], Literal("RDF Data Cube mit demografischen Daten für Berlin", lang="de")) )
 graph_common.add( (cube_res, schema['name'], Literal("RDF Data Cube containing demographic data for Berlin", lang="en")) )
+graph.add( (cube_res, RDF.type, cube['Cube']) )
+graph.add( (cube_res, schema['name'], Literal("RDF Data Cube mit demografischen Daten für Berlin", lang="de")) )
+graph.add( (cube_res, schema['name'], Literal("RDF Data Cube containing demographic data for Berlin", lang="en")) )
 graph_common.add( (cube_res, schema['description'], Literal("Der Cube entält demografische Daten, die aus CSV-Quellen erzeugt wurden. Jede Observation hat eine Zeit- und eine Raum-Dimension, Gesamteinwohnerzahl, geschlechterbasierte Kohorten und altersbasierte Kohorten. Es gibt ein Observationset pro Quell-Datei (eine Quelldatei pro Jahr) sowie ein Gesamt-Observationset.", lang="de")) )
 graph_common.add( (cube_res, schema['description'], Literal("The cube contains demograohic data derived from source data in CSV format. The dimensions of each observation are date, location, total population, gender-based cohorts and various age-based cohorts. There is one Observationset per source CSV (one source file per year), and one overall Observationset.", lang="en")) )
 
@@ -61,6 +64,7 @@ graph.add( (current_os_res, schema['name'], Literal(f"ObservationSet für {sourc
 graph.add( (current_os_res, schema['name'], Literal(f"ObservationSet for {source_file_name}", lang="en")) )
 graph.add( (current_os_res, schema['description'], Literal(f"Dieses ObservationSet enthält die Observations aus der CSV-Quelle {source_file_name}.", lang="de")) )
 graph.add( (current_os_res, schema['description'], Literal(f"This ObservationSet contains Observations derived from the CSV source {source_file_name}.", lang="en")) )
+graph.add( (cube_res, cube['observationSet'], current_os_res) )
 graph_common.add( (cube_res, cube['observationSet'], current_os_res) )
 
 

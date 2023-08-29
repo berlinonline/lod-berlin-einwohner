@@ -1,0 +1,48 @@
+lfn,label,description,alt_label,value_type
+1,ZEIT,"Berichtszeitraum (Jahr, Monat - jjjjmm )",,Text
+2,RAUMID,Raumidentifikator (Bezirk + LOR; 8 Stellen),,Text
+7,STADTRAUM,Gebietsaufteilung der LORs: (ab 31.12.2007),,Text
+8,E_E,Einwohner insgesamt,,GZ
+9,E_EM,Einwohner männlich,,GZ
+10,E_EW,Einwohner weiblich,,GZ
+11,E_E00_01,0 bis unter 1 Jahre,,GZ
+12,E_E01_02,1 bis unter 2 Jahre,,GZ
+13,E_E02_03,2 bis unter 3 Jahre,,GZ
+14,E_E03_05,3 bis unter 5 Jahre,,GZ
+15,E_E05_06,5 bis unter 6 Jahre,,GZ
+16,E_E06_07,6 bis unter 7 Jahre,,GZ
+17,E_E07_08,7 bis unter 8 Jahre,,GZ
+18,E_E08_10,8 bis unter 10 Jahre,,GZ
+19,E_E10_12,10 bis unter 12 Jahre,,GZ
+20,E_E12_14,12 bis unter 14 Jahre,,GZ
+21,E_E14_15,14 bis unter 15 Jahre,,GZ
+22,E_E15_18,15 bis unter 18 Jahre,,GZ
+23,E_E18_21,18 bis unter 21 Jahre,,GZ
+24,E_E21_25,21 bis unter 25 Jahre,,GZ
+25,E_E25_27,25 bis unter 27 Jahre,,GZ
+26,E_E27_30,27 bis unter 30 Jahre,,GZ
+27,E_E30_35,30 bis unter 35 Jahre,,GZ
+28,E_E35_40,35 bis unter 40 Jahre,,GZ
+29,E_E40_45,40 bis unter 45 Jahre,,GZ
+30,E_E45_50,45 bis unter 50 Jahre,,GZ
+31,E_E50_55,50 bis unter 55 Jahre,,GZ
+32,E_E55_60,55 bis unter 60 Jahre,,GZ
+33,E_E60_63,60 bis unter 63 Jahre,,GZ
+34,E_E63_65,63 bis unter 65 Jahre,,GZ
+35,E_E65_67,65 bis unter 67 Jahre,,GZ
+36,E_E67_70,67 bis unter 70 Jahre,,GZ
+37,E_E70_75,70 bis unter 75 Jahre,,GZ
+38,E_E75_80,75 bis unter 80 Jahre,,GZ
+39,E_E80_85,80 bis unter 85 Jahre,,GZ
+40,E_E85_90,85 bis unter 90 Jahre,,GZ
+41,E_E90_95,90 bis unter 95 Jahre,,GZ
+42,E_E95_110,95 und älter,,GZ
+43,E_U1,unter 1 Jahr,Säuglinge,GZ
+44,E_1U6,1 bis unter 6 Jahre,Kinder im Kindergartenalter,GZ
+45,E_6U15,6 bis unter 15 Jahre,"Kinder, jüngere Jugendliche",GZ
+46,E_15U18,15 bis unter 18 Jahre,Jugendliche,GZ
+47,E_18U25,18 bis unter 25 Jahre,junge Erwachsene,GZ
+48,E_25U55,25 bis unter 55 Jahre,Erwachsene,GZ
+49,E_55U65,55 bis unter 65 Jahre,ältere Erwachsene,GZ
+50,E_65U80,65 bis unter 80 Jahre,Senioren,GZ
+51,E_80U110,80 Jahre und älter,Hochbetagte,GZ

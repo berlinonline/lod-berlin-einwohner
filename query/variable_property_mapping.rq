@@ -1,0 +1,15 @@
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX demvoc: <https://berlinonline.github.io/lod-berlin-einwohner/vocab/>
+
+# Extract the mapping of variables used in the source AfS datasets to
+# RDF property. That's needed because the name of some variables changed
+# from one year to the next, but we want to use the same property.
+
+SELECT ?variable ?property
+WHERE {
+    ?property
+        a rdf:Property ;
+        demvoc:afs_variable_name ?variable ;
+    .
+}
+ORDER BY ?property

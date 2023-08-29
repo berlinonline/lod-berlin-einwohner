@@ -38,7 +38,7 @@ jobs:
           pip install -r requirements.txt
       - name: Install dependencies
         run: |
-          sudo apt-get install openjdk-18-jdk
+          sudo apt-get install openjdk-18-jdk csvkit
       - name: Install Apache Jena
         run: |
           curl --location --silent --show-error --fail --retry-connrefused --retry 3 --output jena.tar.gz https://dlcdn.apache.org/jena/binaries/apache-jena-4.9.0.tar.gz

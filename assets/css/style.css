@@ -21,7 +21,7 @@ footer {
 
 .marker {
     min-height: 10px;
-    background-color: orange;
+    background-color: indianred;
 }
 
 body .container {
@@ -109,3 +109,4 @@ body .container {
     padding-right: 15px;
     padding-bottom: 10px;
 }
+

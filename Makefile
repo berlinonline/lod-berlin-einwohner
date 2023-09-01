@@ -72,9 +72,8 @@ _partial_sites/_site_%: cbds_% _partial_sites/_config_%.yml
 	@echo "generating partial site $@ ..."
 	@bundle exec jekyll build --config $(filter-out $<,$^) --destination $@
 
-# partial-sites: _partial_sites/_site_EWR201412E _partial_sites/_site_common 
-partial-sites: _partial_sites/_site_EWR200112E _partial_sites/_site_EWR200212E _partial_sites/_site_EWR200312E _partial_sites/_site_EWR200412E _partial_sites/_site_EWR200512E _partial_sites/_site_EWR200612E _partial_sites/_site_EWR200712E _partial_sites/_site_EWR200812E _partial_sites/_site_EWR200912E _partial_sites/_site_EWR201012E _partial_sites/_site_EWR201112E _partial_sites/_site_EWR201212E _partial_sites/_site_EWR201312E _partial_sites/_site_EWR201412E _partial_sites/_site_EWR201512E _partial_sites/_site_EWR201612E _partial_sites/_site_EWR201712E _partial_sites/_site_EWR201812E _partial_sites/_site_EWR201912E _partial_sites/_site_EWR202012E _partial_sites/_site_common 
-
+# partial-sites: _partial_sites/_site_EWR201412E _partial_sites/_site_common
+partial-sites: _partial_sites/_site_EWR200112E _partial_sites/_site_EWR200212E _partial_sites/_site_EWR200312E _partial_sites/_site_EWR200412E _partial_sites/_site_EWR200512E _partial_sites/_site_EWR200612E _partial_sites/_site_EWR200712E _partial_sites/_site_EWR200812E _partial_sites/_site_EWR200912E _partial_sites/_site_EWR201012E _partial_sites/_site_EWR201112E _partial_sites/_site_EWR201212E _partial_sites/_site_EWR201312E _partial_sites/_site_EWR201412E _partial_sites/_site_EWR201512E _partial_sites/_site_EWR201612E _partial_sites/_site_EWR201712E _partial_sites/_site_EWR201812E _partial_sites/_site_EWR201912E _partial_sites/_site_EWR202012E _partial_sites/_site_common
 
 generate-rdf: data/temp/EWR200112E.ttl data/temp/EWR200212E.ttl data/temp/EWR200312E.ttl data/temp/EWR200412E.ttl data/temp/EWR200512E.ttl data/temp/EWR200612E.ttl data/temp/EWR200712E.ttl data/temp/EWR200812E.ttl data/temp/EWR200912E.ttl data/temp/EWR201012E.ttl data/temp/EWR201112E.ttl data/temp/EWR201212E.ttl data/temp/EWR201312E.ttl data/temp/EWR201412E.ttl data/temp/EWR201512E.ttl data/temp/EWR201612E.ttl data/temp/EWR201712E.ttl data/temp/EWR201812E.ttl data/temp/EWR201912E.ttl data/temp/EWR202012E.ttl
 

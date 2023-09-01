@@ -580,7 +580,7 @@ demvoc:City_region a rdfs:Class ;
     rdfs:isDefinedBy demvoc: ;
 .
 
-demvoc:inner_city a demvoc:city_region ;
+demvoc:inner_city a demvoc:City_region ;
     rdfs:label "Innerer Stadtraum"@de ;
     rdfs:label "inner city"@en ;
     rdfs:comment "Innerer Stadtraum von Berlin"@de ;
@@ -588,7 +588,7 @@ demvoc:inner_city a demvoc:city_region ;
     rdfs:isDefinedBy demvoc: ;
 .
 
-demvoc:outer_city a demvoc:city_region ;
+demvoc:outer_city a demvoc:City_region ;
     rdfs:label "Äußerer Stadtraum"@de ;
     rdfs:label "outer city"@en ;
     rdfs:comment "Äußerer Stadtraum von Berlin"@de ;
@@ -596,7 +596,7 @@ demvoc:outer_city a demvoc:city_region ;
     rdfs:isDefinedBy demvoc: ;
 .
 
-demvoc:undefined_region a demvoc:city_region ;
+demvoc:undefined_region a demvoc:City_region ;
     rdfs:label "Stadtraum undefiniert"@de ;
     rdfs:label "city region not defined"@en ;
     rdfs:comment "ein nicht zuordenbarer Stadtraum Berlins (weder innerer noch äußerer Stadtraum)"@de ;

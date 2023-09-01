@@ -84,7 +84,7 @@ rdf_prefix_path: "conf/prefixes.sparql"
                 <tr>
                 <td>Stadtraum:</td>
                 <td>
-                    <a href="{{ stadtraum }}">
+                    <a href="{{ stadtraum.iri | replace_first: site.true_url, "" }}">
                     {{ stadtraum | rdf_property: "rdfs:label", "de" }}
                     </a>
                 </td>
@@ -94,7 +94,7 @@ rdf_prefix_path: "conf/prefixes.sparql"
                     {% assign value = page.rdf | rdf_property: dimension %}
                     {% if value %}
                     <tr>
-                    <td><a href="{{ dimension | rdf_get }}">{{ dimension | rdf_get | rdf_property: "rdfs:label", "de" }}</a>:</td>
+                    <td><a href="{{ dimension | rdf_get | replace_first: site.true_url, "" }}">{{ dimension | rdf_get | rdf_property: "rdfs:label", "de" }}</a>:</td>
                     <td>{{ value }}</a>
                     </td>
                     </tr>

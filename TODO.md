@@ -1,9 +1,9 @@
 # TODO
 
 - [X] vocabulary description
-- [ ] template for vocabulary terms
-    - [ ] label, comment, altlabel
-    - [ ] rdfs:definedBy
+- [X] template for vocabulary terms
+    - [X] label, comment, altlabel
+    - [X] rdfs:definedBy
     - [X] breadcrumb should be Datensatz > VOCAB > CURRENT_TERM
 - [X] convert sources
 - [ ] cube constraint
@@ -18,7 +18,7 @@
 - [X] sort Observations in ObservationSet
 - [X] fix Georeferenz in Observation (currently points back to observation)
 - [X] in EWR2014 the leading 0s in the RAUMIDs are missing
-- [ ] there is no download dump
+- [X] there is no download dump
 - [ ] bring improvements to template back upstream
 
 ## Scalability Problem

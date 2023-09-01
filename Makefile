@@ -77,7 +77,7 @@ partial-sites: _partial_sites/_site_EWR200112E _partial_sites/_site_EWR200212E _
 
 
 
-merge-sites: partial-sites _site
+merge-sites: partial-sites _site data/target/all.ttl
 	@echo "merging all partial sites into $(filter-out $<,$^) ..."
 	@if [ $(UNAME_S) = "Linux" ]; then\
 		cp -n -R _partial_sites/*/* $(filter-out $<,$^)/;\
@@ -89,6 +89,11 @@ merge-sites: partial-sites _site
 data/temp/all.nt: data/temp/base_data.nt data/temp/all_cubes.ttl
 	@echo "combining $^ to $@ ..."
 	@rdfpipe -o ntriples $^ > $@
+
+.PHONY: data/target/all.ttl
+data/target/all.ttl: 
+	@echo "merging all cubes ..."
+	@rdfpipe -o turtle data/temp/EWR*.ttl > $@
 
 # Housekeeping (create folders, clean/delete stuff)
 

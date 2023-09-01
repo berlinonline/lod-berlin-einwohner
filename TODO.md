@@ -4,7 +4,7 @@
 - [ ] template for vocabulary terms
     - [ ] label, comment, altlabel
     - [ ] rdfs:definedBy
-    - [ ] breadcrumb should be Datensatz > VOCAB > CURRENT_TERM
+    - [X] breadcrumb should be Datensatz > VOCAB > CURRENT_TERM
 - [X] convert sources
 - [ ] cube constraint
 - [ ] explain data structure in README
@@ -13,8 +13,13 @@
     - [X] Cube, 
     - [X] ObservationSet, 
     - [X] Observation
-- [ ] `lor19` namespace prefix does not show up in observations (instead empty prefix is shown)
-- [ ] get names of PLRs from LOR-19 dataset and merge with this data, to display name instead of URL in observation
+- [X] `lor19` namespace prefix does not show up in observations (instead empty prefix is shown)
+- [X] get names of PLRs from LOR-19 dataset and merge with this data, to display name instead of URL in observation
+- [X] sort Observations in ObservationSet
+- [X] fix Georeferenz in Observation (currently points back to observation)
+- [X] in EWR2014 the leading 0s in the RAUMIDs are missing
+- [ ] there is no download dump
+- [ ] bring improvements to template back upstream
 
 ## Scalability Problem
 

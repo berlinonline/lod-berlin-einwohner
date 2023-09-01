@@ -50,14 +50,22 @@ rdf_prefix_path: "conf/prefixes.sparql"
                     <tbody>
                         {% include type_row.html %}
 
-                        {% assign observations = page.rdf | rdf_property: "cube:observation", nil, true %}
-                        {% for set in observations %}
-                        <tr>
-                            <td>Observation:</td>
-                            <td>{% include prefix_url.html iri = set.iri %}</a>
-                            </td>
-                        </tr>
-                        {% endfor %}
+                        {% capture observation_query %}
+                            SELECT ?observation
+                            WHERE {
+                                ?resourceUri cube:observation ?observation
+                            } ORDER BY ?observation
+                        {% endcapture %}
+                        {% assign observations = page.rdf | sparql_query: observation_query %}
+                        {% if observations.size > 0 %}
+                            {% for row in observations %}
+                                <tr>
+                                    <td>Observation:</td>
+                                    <td>{% include prefix_url.html iri = row.observation.iri %}</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        {% endif %}
                     </tbody>
                 </table>
             </div>

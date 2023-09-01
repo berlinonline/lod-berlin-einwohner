@@ -70,24 +70,21 @@ rdf_prefix_path: "conf/prefixes.sparql"
             {% if root_resource %}
             <tr>
               <td>Einstiegsressource:</td>
-              <td>{% include prefix_url.html iri = root_resource.iri %}</a>
-              </td>
+              <td>{% include prefix_url.html iri = root_resource.iri %}</td>
             </tr>
             {% endif %}
             {% assign example_resources = page.rdf | rdf_property: "void:exampleResource", nil, true %}
             {% for resource in example_resources %}
             <tr>
               <td>Beispielressource:</td>
-              <td>{% include prefix_url.html iri = resource.iri %}</a>
-              </td>
+              <td>{% include prefix_url.html iri = resource.iri %}</td>
             </tr>
             {% endfor %}
             {% assign versions = page.rdf | rdf_property: "dct:hasVersion", nil, true %}
             {% for version in versions %}
             <tr>
               <td>Andere Version:</td>
-              <td>{% include prefix_url.html iri = version.iri %}</a>
-              </td>
+              <td>{% include prefix_url.html iri = version.iri %}</td>
             </tr>
             {% endfor %}
             {% assign data_dumps = page.rdf | rdf_property: "void:dataDump", nil, true %}
@@ -113,24 +110,24 @@ rdf_prefix_path: "conf/prefixes.sparql"
             </tr>
             {% endfor %}
             {% capture sources_query %}
-            SELECT ?source
-            WHERE {
-            ?resourceUri
-            prov:wasGeneratedBy/prov:used ?source ;
-            }
+              SELECT ?source
+              WHERE {
+                ?resourceUri
+                prov:wasGeneratedBy/prov:used ?source ;
+              }
             {% endcapture %}
             {% assign sources = page.rdf | sparql_query: sources_query %}
             {% if sources.size > 0 %}
-            {% for row in sources %}
-            <tr>
-              <td>Quelle:</td>
-              <td>
-                <a href="{{ row.source }}">
-                  {{ row.source }}
-                </a>
-              </td>
-            </tr>
-            {% endfor %}
+              {% for row in sources %}
+                <tr>
+                  <td>Quelle:</td>
+                  <td>
+                    <a href="{{ row.source }}">
+                      {{ row.source }}
+                    </a>
+                  </td>
+                </tr>
+              {% endfor %}
             {% endif %}
           </tbody>
         </table>

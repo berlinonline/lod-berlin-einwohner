@@ -1,10 +1,20 @@
 base_uri = https://berlinonline.github.io/lod-berlin-einwohner/
 berlinonline_url = https://raw.githubusercontent.com/berlinonline/lod-berlin-bo/main/data/static/berlinonline.ttl
+lor19_url = https://raw.githubusercontent.com/berlinonline/lod-berlin-lor-2019/main/data/target/lors.ttl
 UNAME_S := $(shell uname -s)
 
 data/temp/berlinonline.ttl: data/temp
 	@echo "downloading $(berlinonline_url)..."
 	@curl -s -o $@ "$(berlinonline_url)"
+
+data/temp/lor19.ttl: data/temp
+	@echo "downloading $(lor19_url)..."
+	@curl -s -o $@ "$(lor19_url)"
+
+data/temp/plr_names.ttl: data/temp/lor19.ttl
+	@echo "extracting the names of Planungsräume from $< ..."
+	@echo "writing to $@ ..."
+	@arq --data $< --query query/extract_plr_names.rq > $@
 
 data/temp/variable_property_mapping.csv: data/temp data/vocab/demvoc.ttl
 	@echo "extracting AfS variable to RDF property mapping from $(filter-out $<,$^) ..."
@@ -23,7 +33,7 @@ data/temp/%.ttl: data/temp/variable_property_mapping.csv data/temp/%.normalised.
 	@echo "writing to $@ ..."
 	@python bin/csv2cube.py --source $(filter-out $<,$^) --output $@
 
-data/temp/%_extended.nt: data/temp data/temp/%.ttl data/vocab/demvoc.ttl
+data/temp/%_extended.nt: data/temp data/temp/%.ttl data/vocab/demvoc.ttl data/temp/plr_names.ttl
 	@echo "combining $(filter-out $<,$^) to $@ ..."
 	@rdfpipe -o ntriples $(filter-out $<,$^) > $@
 
@@ -62,8 +72,10 @@ _partial_sites/_site_%: cbds_% _partial_sites/_config_%.yml
 	@echo "generating partial site $@ ..."
 	@bundle exec jekyll build --config $(filter-out $<,$^) --destination $@
 
-# partial-sites: _partial_sites/_site_EWR201012E _partial_sites/_site_common 
-partial-sites: _partial_sites/_site_EWR201012E _partial_sites/_site_EWR201112E _partial_sites/_site_EWR201212E _partial_sites/_site_EWR201312E _partial_sites/_site_EWR201412E _partial_sites/_site_EWR201512E _partial_sites/_site_EWR201612E _partial_sites/_site_EWR201712E _partial_sites/_site_EWR201812E _partial_sites/_site_EWR201912E _partial_sites/_site_EWR202012E _partial_sites/_site_common 
+# partial-sites: _partial_sites/_site_EWR201412E _partial_sites/_site_common 
+partial-sites: _partial_sites/_site_EWR200112E _partial_sites/_site_EWR200212E _partial_sites/_site_EWR200312E _partial_sites/_site_EWR200412E _partial_sites/_site_EWR200512E _partial_sites/_site_EWR200612E _partial_sites/_site_EWR200712E _partial_sites/_site_EWR200812E _partial_sites/_site_EWR200912E _partial_sites/_site_EWR201012E _partial_sites/_site_EWR201112E _partial_sites/_site_EWR201212E _partial_sites/_site_EWR201312E _partial_sites/_site_EWR201412E _partial_sites/_site_EWR201512E _partial_sites/_site_EWR201612E _partial_sites/_site_EWR201712E _partial_sites/_site_EWR201812E _partial_sites/_site_EWR201912E _partial_sites/_site_EWR202012E _partial_sites/_site_common 
+
+
 
 merge-sites: partial-sites _site
 	@echo "merging all partial sites into $(filter-out $<,$^) ..."

@@ -1,0 +1,13 @@
+PREFIX lor19: <https://berlinonline.github.io/lod-berlin-lor-2019/>
+PREFIX unit: <https://berlinonline.github.io/lod-berlin-lor/vocab/>
+PREFIX schema: <https://schema.org/>
+
+CONSTRUCT {
+    ?plr schema:name ?plr_name .
+}
+WHERE {
+    ?plr 
+        a unit:Planungsraum ;
+        schema:name ?plr_name ;
+    .
+} ORDER BY ?plr

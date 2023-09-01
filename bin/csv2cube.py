@@ -85,7 +85,7 @@ with open(args.source) as f:
         date = row['ZEIT']
         if date == '':
             continue
-        lor = row['RAUMID']
+        lor = row['RAUMID'].rjust(8, '0')
         obs_id = f'obs_{date}_{lor}'
         obs_res = einwohner[obs_id]
         graph.add( (obs_res, RDF.type, cube['Observation']) )

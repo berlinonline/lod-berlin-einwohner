@@ -58,52 +58,52 @@ rdf_prefix_path: "conf/prefixes.sparql"
                 <p>{{ page.rdf | rdf_property: "schema:description", "de" }}</p>
             </div>
         </div>
-    <div class="row">
-      <div class="col-lg-6 col-md-9 col-sm-12">
-        <table class="table table-striped align-middle">
-          <tbody>
-            {% include type_row.html %}
-            {% assign date = page.rdf | rdf_property: "dct:date" %}
-            {% if date %}
-            <tr>
-              <td>Zeit:</td>
-              <td>{{ date }}</td>
-            </tr>
-            {% endif %}
-            {% assign geo_ref = page.rdf | rdf_property: "demvoc:raumid" %}
-            {% if geo_ref %}
-            <tr>
-              <td>Georeferenz:</td>
-              <td>
-                {% include prefix_url.html iri=page.rdf.iri %}
-              </td>
-            </tr>
-            {% endif %}
-            {% assign stadtraum = page.rdf | rdf_property: "demvoc:stadtraum" %}
-            {% if stadtraum %}
-            <tr>
-              <td>Stadtraum:</td>
-              <td>
-                <a href="{{ stadtraum }}">
-                  {{ stadtraum | rdf_property: "rdfs:label", "de" }}
-                </a>
-              </td>
-            </tr>
-            {% endif %}
-            {% for dimension in site.data.observation_dimensions %}
-                {% assign value = page.rdf | rdf_property: dimension %}
-                {% if value %}
+        <div class="row">
+        <div class="col-lg-6 col-md-9 col-sm-12">
+            <table class="table table-striped align-middle">
+            <tbody>
+                {% include type_row.html %}
+                {% assign date = page.rdf | rdf_property: "dct:date" %}
+                {% if date %}
                 <tr>
-                  <td><a href="{{ dimension | rdf_get }}">{{ dimension | rdf_get | rdf_property: "rdfs:label", "de" }}</a>:</td>
-                  <td>{{ value }}</a>
-                  </td>
+                <td>Zeit:</td>
+                <td>{{ date }}</td>
                 </tr>
                 {% endif %}
-            {% endfor %}
-          </tbody>
-        </table>
-      </div>
-    </div>
+                {% assign geo_ref = page.rdf | rdf_property: "demvoc:raumid" %}
+                {% if geo_ref %}
+                <tr>
+                <td>Georeferenz:</td>
+                <td>
+                    {% include prefix_url.html iri=geo_ref.iri %} ({{ geo_ref | rdf_get | rdf_property: "schema:name" }})
+                </td>
+                </tr>
+                {% endif %}
+                {% assign stadtraum = page.rdf | rdf_property: "demvoc:stadtraum" %}
+                {% if stadtraum %}
+                <tr>
+                <td>Stadtraum:</td>
+                <td>
+                    <a href="{{ stadtraum }}">
+                    {{ stadtraum | rdf_property: "rdfs:label", "de" }}
+                    </a>
+                </td>
+                </tr>
+                {% endif %}
+                {% for dimension in site.data.observation_dimensions %}
+                    {% assign value = page.rdf | rdf_property: dimension %}
+                    {% if value %}
+                    <tr>
+                    <td><a href="{{ dimension | rdf_get }}">{{ dimension | rdf_get | rdf_property: "rdfs:label", "de" }}</a>:</td>
+                    <td>{{ value }}</a>
+                    </td>
+                    </tr>
+                    {% endif %}
+                {% endfor %}
+            </tbody>
+            </table>
+        </div>
+        </div>
         <div class="row local-graph">
             <div class="col-12">
                 {% include local_graph.html %}

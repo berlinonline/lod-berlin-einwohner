@@ -1,13 +1,13 @@
 ---
 rdf_prefix_path: "conf/prefixes.sparql"
 ---
-{% assign title = page.rdf | rdf_property: "schema:name", "de" %}
+{% assign title = page.rdf | rdf_property: "rdfs:label", "de" %}
 {% assign page_link = page.url | absolute_url | replace: '.html', '' %}
 <html>
 {% include page_head.html title = title %}
 
 <body>
-    {% include content_header.html title = title page_link = page_link icon = "box" %}
+    {% include content_header.html title = title page_link = page_link icon = "square" %}
     <div class="container">
         <div class="row breadcrumbs">
             <div class="col-12">
@@ -18,6 +18,14 @@ rdf_prefix_path: "conf/prefixes.sparql"
                                 {{ site.dataset_breadcrumb }}
                             </a>
                         </li>
+                        {% assign vocabs = page.rdf | rdf_property: "rdfs:isDefinedBy", nil, true %}
+                        {% if vocabs.size > 0 %}
+                            {% for vocab in vocabs %}
+                                <li class="breadcrumb-item">
+                                    <a href="{{ vocab.page_url | relative_url }}">{{ vocab | rdf_get | rdf_property: "rdfs:label", "de" }}</a>
+                                </li>
+                            {% endfor %}
+                        {% endif %}
                         <li class="breadcrumb-item">
                             {{ title }}
                         </li>
@@ -27,7 +35,7 @@ rdf_prefix_path: "conf/prefixes.sparql"
         </div>
         <div class="row">
             <div class="col-12">
-                <p>{{ page.rdf | rdf_property: "schema:description", "de" }}</p>
+                <p>{{ page.rdf | rdf_property: "rdfs:comment", "de" }}</p>
             </div>
         </div>
         <div class="row">
@@ -36,21 +44,16 @@ rdf_prefix_path: "conf/prefixes.sparql"
                     <tbody>
                         {% include type_row.html %}
 
-                        {% capture obs_set_query %}
-                            SELECT ?obs_set
-                            WHERE {
-                                ?resourceUri cube:observationSet ?obs_set
-                            } ORDER BY ?obs_set
-                        {% endcapture %}
-                        {% assign obs_sets = page.rdf | sparql_query: obs_set_query %}
-                        {% if obs_sets.size > 0 %}
-                            {% for row in obs_sets %}
+                        {% if vocabs.size > 0 %}
+                            {% for vocab in vocabs %}
                                 <tr>
-                                    <td>ObservationSet:</td>
-                                    <td>{% include prefix_url.html iri = row.obs_set.iri %}</td>
+                                    <td>Vokabular:</td>
+                                    <td><a href="{{ vocab.page_url | relative_url }}">{{ vocab | rdf_get | rdf_property: "rdfs:label", "de" }}</a></a>
+                                    </td>
                                 </tr>
                             {% endfor %}
                         {% endif %}
+
                     </tbody>
                 </table>
             </div>

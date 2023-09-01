@@ -1,0 +1,13 @@
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?term ?type ?term_label
+WHERE {
+    ?term 
+        rdfs:isDefinedBy ?resourceUri ;
+        a ?type ;
+    .
+    OPTIONAL {
+        ?term rdfs:label ?term_label .
+        FILTER(lang(?term_label)="de")
+    }
+} ORDER BY ?type ?term
